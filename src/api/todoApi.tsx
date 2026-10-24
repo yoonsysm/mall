@@ -13,6 +13,12 @@ export const getOne = async (tno: number | string) => {
 
 export const getList = async (pageParam: PageParam) => {
   const res = await axios.get(`${prefix}/list`, { params: pageParam });
- 
+
+  return res.data;
+};
+
+export const postAdd = async (todoObj: TodoAdd) => {
+  const res = await axios.post(`${prefix}/`, todoObj);
+  
   return res.data;
 };
