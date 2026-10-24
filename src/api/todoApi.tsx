@@ -10,3 +10,9 @@ export const getOne = async (tno: number | string) => {
 
   return res.data;
 };
+
+export const getList = async (pageParam: PageParam) => {
+  const res = await axios.get(`${prefix}/list`, { params: pageParam });
+ 
+  return res.data;
+};
