@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import { postAdd } from "../../api/todoApi";
 import useCustomMove from "../../hooks/useCustomMove";
+import ResultModal from "../common/resultModal";
 
 const initState: TodoAdd = {
   title: "",
@@ -11,6 +12,8 @@ const initState: TodoAdd = {
 
 function AddComponent() {
   const [todo, setTodo] = useState<TodoAdd>({ ...initState });
+  const [result, setResult] = useState<number | null>(null);
+
   const { moveToList }: UseCustomMoveReturn = useCustomMove();
 
   const handleChangeTodo = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +27,11 @@ function AddComponent() {
   const handleClickAdd = (): void => {
     postAdd(todo)
       .then((result) => {
-        console.log(result); //초기화
+        console.log(result);
+
+        setResult(result.TNO);
+
+        //초기화
         setTodo({ ...initState });
       })
       .catch((e) => {
@@ -32,8 +39,22 @@ function AddComponent() {
       });
   };
 
+  const closeModal = (): void => {
+    setResult(null);
+    moveToList();
+  };
+
   return (
     <div className="border-2 border-sky-200 mt-10 m-2 p-4">
+      {/* 모달 처리 */}
+      {result && (
+        <ResultModal
+          title={"등록 처리 완료"}
+          content={`${result}번 처리`}
+          callbackFn={closeModal}
+        />
+      )}
+
       <div className="flex justify-center">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
           <div className="w-1/5 p-6 text-right font-bold">TITLE</div>
@@ -46,7 +67,6 @@ function AddComponent() {
           ></input>
         </div>
       </div>
-
       <div className="flex justify-center">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
           <div className="w-1/5 p-6 text-right font-bold">WRITER</div>
@@ -60,7 +80,6 @@ function AddComponent() {
           ></input>
         </div>
       </div>
-
       <div className="flex justify-center">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
           <div className="w-1/5 p-6 text-right font-bold">DUEDATE</div>
@@ -73,7 +92,6 @@ function AddComponent() {
           ></input>
         </div>
       </div>
-
       <div className="flex justify-end">
         <div className="relative mb-4 flex p-4 flex-wrap items-stretch">
           <button
