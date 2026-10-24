@@ -12,3 +12,10 @@ interface TodoAdd {
   dueDate: string;
   complete: boolean;
 }
+
+interface TodoModify {
+  tno: number;
+  title: string;
+  dueDate: string | null;
+  complete: boolean;
+}
