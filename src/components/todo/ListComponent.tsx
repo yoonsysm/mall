@@ -4,7 +4,7 @@ import useCustomMove from "../../hooks/useCustomMove";
 import PageComponent from "../common/pageComponent";
 
 const ListComponent = () => {
-  const { page, size, moveToRead, moveToList }: UseCustomMoveReturn =
+  const { page, size, refresh, moveToRead, moveToList }: UseCustomMoveReturn =
     useCustomMove();
 
   //serverData는 나중에 사용
@@ -17,7 +17,7 @@ const ListComponent = () => {
       console.log(data);
       setServerData(data);
     });
-  }, [page, size]);
+  }, [page, size, refresh]);
 
   return (
     <div className="border-2 border-blue-100 mt-10 mr-2 ml-2">
