@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { Navigate } from "react-router";
 
 const TodoIndex = lazy(() => import("../pages/todo/indexPage"));
 const TodoList = lazy(() => import("../pages/todo/listPage"));
@@ -44,6 +45,10 @@ export default function todoRouter() {
             <TodoModify />
           </Suspense>
         ),
+      },
+      {
+        path: "",
+        element: <Navigate to={"/todo/list"}></Navigate>,
       },
     ],
   };
