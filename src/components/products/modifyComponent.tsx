@@ -10,6 +10,7 @@ interface ProductTaskResult {
   result: string;
   error?: string;
 }
+
 const initState: ProductTaskResult = {
   actionType: "modify",
   result: "",
@@ -38,7 +39,9 @@ const modifyDeleteAsyncAction = async (
 };
 
 function ModifyComponent({ product }: { product: ProductDTO }) {
+
   const { moveToRead, moveToList } = useCustomMove();
+
   const [images, setImages] = useState<string[]>([...product.uploadFileNames]);
 
   const deleteOldImages = (
@@ -47,6 +50,7 @@ function ModifyComponent({ product }: { product: ProductDTO }) {
   ) => {
     event.preventDefault();
     event.stopPropagation();
+    
     setImages((prev) => prev.filter((img) => img !== target));
   };
 
