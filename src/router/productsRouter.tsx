@@ -20,7 +20,7 @@ function productsRouter() {
             <ProductsList />
           </Suspense>
         ),
-        loader: loadProducts,
+        loader: loadProducts
       },
       {
         path: "add",
