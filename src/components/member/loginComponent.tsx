@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginPostAsync } from "../../slices/loginSlice";
-import { type AppDispatch, type RootState } from "../../store";
+import ResultModal from "../common/resultModal";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 function LoginComponent() {
-  const dispatch = useDispatch<AppDispatch>();
-
-  const loginStatus = useSelector(
-    (state: RootState) => state.loginSlice.status,
-  );
+  const { loginStatus, doLogin, moveToPath } = useCustomLogin();
 
   const [email, setEmail] = useState("");
+
   const [pw, setPw] = useState("");
 
   const handleLogin = () => {
-    dispatch(loginPostAsync({ email, pw }));
+    doLogin(email, pw);
+  };
+
+  const closeModal = () => {
+    moveToPath("/");
   };
 
   return (
@@ -23,7 +23,11 @@ function LoginComponent() {
         <div className="bg-amber-300">로그인 중...</div>
       )}
       {loginStatus === "fulfilled" && (
-        <div className="bg-green-300">로그인 성공!</div>
+        <ResultModal
+          title="Login Result"
+          content="로그인 되었습니다."
+          callbackFn={closeModal}
+        />
       )}
       {loginStatus === "rejected" && (
         <div className="bg-red-300">로그인 실패</div>

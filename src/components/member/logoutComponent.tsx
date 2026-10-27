@@ -1,9 +1,8 @@
-import { useDispatch } from "react-redux";
-import { logout } from "../../slices/loginSlice";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 function LogoutComponent() {
-  const dispatch = useDispatch();
-  
+  const { doLogout } = useCustomLogin();
+
   return (
     <div className="border-2 border-red-200 mt-10 m-2 p-4">
       <div className="flex justify-center">
@@ -11,12 +10,13 @@ function LogoutComponent() {
           Logout Component
         </div>
       </div>
+
       <div className="flex justify-center">
         <div className="relative mb-4 flex w-full justify-center">
           <div className="w-2/5 p-6 flex justify-center font-bold">
             <button
               className="rounded p-4 w-36 bg-red-500 text-xl text-white"
-              onClick={() => dispatch(logout(null))}
+              onClick={doLogout}
             >
               LOGOUT
             </button>
@@ -26,4 +26,5 @@ function LogoutComponent() {
     </div>
   );
 }
+
 export default LogoutComponent;
