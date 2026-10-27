@@ -9,16 +9,15 @@ const initState: LoginInfo = {
 };
 
 const loginSlice = createSlice({
-  name: "LoginSlice",
+  name: "loginSlice",
   initialState: initState,
-
   reducers: {
     login: (state, action) => {
-      console.log("login");
+      console.log("login..................");
     },
 
     logout: (state, action) => {
-      console.log("logout");
+      console.log("logout..................");
     },
   },
 });
