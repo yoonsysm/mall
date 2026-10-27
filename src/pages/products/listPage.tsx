@@ -1,10 +1,11 @@
-import axios from "axios";
+
 import {
   createSearchParams,
   useLoaderData,
   type LoaderFunctionArgs,
 } from "react-router";
 import ListComponent from "../../components/products/listComponent";
+import jwtAxios from "../../util/jwtUtil";
 
 // React Router requires route loaders to be exported from the route module.
 // eslint-disable-next-line react-refresh/only-export-components
@@ -15,7 +16,7 @@ export async function loadProducts({ request }: LoaderFunctionArgs) {
 
   const queryStr = createSearchParams({ page, size }).toString();
 
-  const res = await axios.get(
+  const res = await jwtAxios.get(
     `http://localhost:8080/api/products/list?${queryStr}`,
   );
 
