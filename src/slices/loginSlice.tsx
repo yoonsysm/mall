@@ -1,29 +1,65 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { loginPost } from "../api/memberApi"; 
 
+//API 서버의 결과를 받도록 변경
 export interface LoginInfo {
   email: string;
+  nickname: string;
+  accessToken: string;
+  refreshToken: string;
+  roleNames: string[];
+  status: string;
 }
 
 const initState: LoginInfo = {
   email: "",
+  nickname: "",
+  accessToken: "",
+  refreshToken: "",
+  roleNames: [],
+  status: "",
 };
 
+export const loginPostAsync = createAsyncThunk(
+  "loginPostAsync",
+  ({ email, pw }: { email: string; pw: string }) => {
+    console.log("---------------loginPostAsync---------------------");
+    console.log(email, pw);
+    return loginPost(email, pw);
+  },
+);
+
 const loginSlice = createSlice({
-  name: "loginSlice",
+  name: "LoginSlice",
   initialState: initState,
   reducers: {
-    login: (state, action) => {
-      console.log("login..................", action.payload);
-      return {email: action.payload.email}
-    },
-
+    //login은 사용하지 않음
     logout: (state, action) => {
-      console.log("logout..................");
-      return {email:''}
+      console.log("logout.................................");
+      return { ...initState };
     },
   },
-});
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginPostAsync.fulfilled, (state, action) => {
+        console.log("loginPostAsync.fulfilled");
+        const newState = { ...action.payload };
+        console.log("payload", action.payload);
+        newState.status = "fulfilled";
+        return newState;
+      })
+      .addCase(loginPostAsync.pending, (state, action) => {
+        console.log("loginPostAsync.pending");
+        state.status = "pending";
+      })
+      .addCase(loginPostAsync.rejected, (state, action) => {
+        console.log("loginPostAsync.rejected");
+        state.status = "rejected";
+      });
+  },
+}); 
 
-export const { login, logout } = loginSlice.actions;
+//login은 사용하지 않음
+export const { logout } = loginSlice.actions;
 
 export default loginSlice.reducer;
