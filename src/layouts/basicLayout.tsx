@@ -1,7 +1,11 @@
 import { Outlet } from "react-router";
 import BasicMenu from "../components/menus/basicMenu";
+import { useSelector } from "react-redux";
+import type { LoginInfo } from "../slices/loginSlice";
+import type { RootState } from "../store";
 
 const BasicLayout = () => {
+
   return (
     <>
       <BasicMenu />
