@@ -1,5 +1,5 @@
-import { useActionState } from "react";
-import { useDispatch } from "react-redux"
+import { useActionState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { login } from "../../slices/loginSlice";
 
 interface LoginResult {
@@ -11,18 +11,36 @@ const initState: LoginResult = {
   signed: false,
 };
 function LoginComponent() {
+  const dispatch = useDispatch();
+
   const [state, action, isPending] = useActionState(
     async (state: LoginResult, formData: FormData) => {
+        
       //2초간 delay
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      return initState;
+
+      const email = formData.get("email") as string;
+      const pw = formData.get("pw") as string;
+
+      console.log("email ", email, "pw ", pw);
+
+      return { email: email, signed: true };
     },
     initState,
   );
 
+  useEffect(() => {
+    if (state.signed) {
+      dispatch(login(state));
+    }
+  }, [state.signed]);
+
   return (
     <div className="border-2 border-sky-200 mt-10 m-2 p-4">
-      {isPending && <div>로그인 처리중...</div>}
+      {isPending && <div className="bg-amber-300">로그인 처리중...</div>}
+
+      {state.signed && <div className="bg-green-300"> 로그인 처리 완료 </div>}
+
       <form action={action}>
         <div className="flex justify-center">
           <div className="text-4xl m-4 p-4 font-extrabold text-blue-500">
@@ -36,7 +54,7 @@ function LoginComponent() {
             <input
               className="w-full p-6 rounded-r border border-solid border-neutral-500 shadow-md"
               name="email"
-              type={'text'}
+              type={"text"}
             />
           </div>
         </div>
@@ -47,7 +65,7 @@ function LoginComponent() {
             <input
               className="w-full p-6 rounded-r border border-solid border-neutral-500 shadow-md"
               name="pw"
-              type={'password'}
+              type={"password"}
             />
           </div>
         </div>
