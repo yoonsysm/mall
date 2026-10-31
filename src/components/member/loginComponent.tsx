@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ResultModal from "../common/resultModal";
 import useCustomLogin from "../../hooks/useCustomLogin";
+import KakaoLoginComponent from "./KakaoLoginComponent";
 
 function LoginComponent() {
   const { loginStatus, doLogin, moveToPath } = useCustomLogin();
@@ -38,6 +39,7 @@ function LoginComponent() {
           Login Component
         </div>
       </div>
+
       <div className="flex justify-center">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
           <div className="w-full p-6 text-left font-bold">Email</div>
@@ -50,6 +52,7 @@ function LoginComponent() {
           />
         </div>
       </div>
+
       <div className="flex justify-center">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
           <div className="w-full p-6 text-left font-bold">Password</div>
@@ -62,6 +65,7 @@ function LoginComponent() {
           />
         </div>
       </div>
+
       <div className="flex justify-center">
         <div className="relative mb-4 flex w-full justify-center">
           <div className="w-2/5 p-6 flex justify-center font-bold">
@@ -75,6 +79,7 @@ function LoginComponent() {
           </div>
         </div>
       </div>
+      <KakaoLoginComponent />
     </div>
   );
 }
