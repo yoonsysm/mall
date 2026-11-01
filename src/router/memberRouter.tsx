@@ -4,6 +4,7 @@ const Loading = <div>Loading....</div>;
 
 const Login = lazy(() => import("../pages/member/loginPage"));
 const Logout = lazy(() => import("../pages/member/logoutPage"));
+const KakaoRirect = lazy(() => import("../pages/member/kakaoRedirectPage"));
 
 export default function memberRouter() {
   return {
@@ -22,6 +23,14 @@ export default function memberRouter() {
         element: (
           <Suspense fallback={Loading}>
             <Logout />
+          </Suspense>
+        ),
+      },
+      {
+        path: "kakao",
+        element: (
+          <Suspense fallback={Loading}>
+            <KakaoRirect />
           </Suspense>
         ),
       },
