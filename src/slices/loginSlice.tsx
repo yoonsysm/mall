@@ -37,7 +37,12 @@ const loginSlice = createSlice({
     //쿠키에서 로딩한 데이터를 반영
     save: (state, action) => {
       console.log("save........................");
-      return action.payload;
+      const payload = action.payload; //{소셜로그인 회원이 사용}
+
+      const newState = { ...payload, status: "saved" };
+      setCookie("member", JSON.stringify(newState), 1); //1일
+
+      return payload;
     },
     //login은 사용하지 않음
     logout: (state, action) => {
